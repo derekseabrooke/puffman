@@ -1,0 +1,60 @@
+﻿                          Challenge
+
+Description
+-----------
+
+Puffman Encryption Example is designed for non-commercial use only as 
+an example of of work by Electric Genesis Consulting & Research in the 
+compiled Java language.  Conceptually Puffman works by padding the 
+statistical model of a Huffman encoded file against a key file with an 
+exclusive-or operation.  The theory is that without this statistical 
+information it would be impossible in a trivial time frame to guess or 
+extrapolate what this was.  This is the basis of its security.
+
+In addition, Puffman allows the programmer to set the word size of 
+input characters hard-coded in source code to any value between one and 
+seven bits.  It is hoped, though not proven that not aligning to eight 
+bit characters boundaries will make Puffman more difficult to crack.  
+It is further hoped, though not proven that by randomly biasing the 
+statistical model before compression will make the statistical model 
+more difficult to guess.  This is likely the case where character width 
+is set very low as high entropy files tend to use trees that are closed 
+to balanced.
+
+How secure is Puffman?  You tell me.  Your challenge is to crack the 
+provided mystery.txt.puf file.  Please note that Puffman is a 
+non-commercial product and some information in the header is not 
+encryption against the key file which might be helpful in your cracking 
+efforts.
+
+.puff File Format
+-----------------
+
+  --- clear ---
+    File Signature – 4 bytes – contains “PUFF” used to validate .puff 
+file
+    Character width – 1 byte – binary, word size used for input 
+characters
+    Input size – 4 bytes – integer, size of decrypted file
+    CRC – 4 bytes – integer, cyclic redundancy check of decrypted file
+  --- encrypted --
+    Statistical model – variable bits – binary tree enumerated using 
+Knott's method and stored in the minimum number of bits required to 
+store a tree of this size: the bit size of the catalan number of two 
+to the power of characters width subtract one if the size of the key 
+is less than this length the remainder will be clear
+    Content table – variable bits – the following is the alphabet in 
+the order they are used in the tree the size of this table is 
+character width multipled by two to the power of character width bits 
+if key file is larger than enumerated tree it will run over into this 
+table
+    Secret content – variable bits – the following content is the 
+decrypted file Huffman encoded against this statistical model if the 
+key file is longer than the encoded length of the statistical model 
+the beginning of this will be encrypted
+
+If you crack it
+---------------
+
+If you are able to crack the file, I'd love to know how.  Please 
+drop me a message at Derek Seabrooke <dseabroo@electricgenesis.com>.
